@@ -11,14 +11,18 @@ public class LamportTimestamp {
     public void tick(){
 
         // update the timestamp by 1
+        timestamp++;
     }
     public int getCurrentTimestamp(){
 
         return timestamp;
     }
     public void updateClock(int receivedTimestamp){
+        // update the function to choose max out of the two received timestamps
+        timestamp = Math.max(timestamp, receivedTimestamp);
+        tick();
 
-        timestamp = receivedTimestamp; // update the function to choose max out of the two received timestamps
+
     }
 
 }
