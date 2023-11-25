@@ -21,8 +21,8 @@ public class VectorClientThread implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            try {
+        try {
+            while (true) {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 clientSocket.receive(receivePacket); // Receive the packet from the server
 
@@ -54,10 +54,10 @@ public class VectorClientThread implements Runnable {
                 vcl.tick(id);
 
                 System.out.println("Server: " + actualResponseMessage + " " + vcl.showClock());
+                break;
+              }
             } catch (IOException e) {
                 e.printStackTrace();
-                break;
             }
         }
     }
-}
