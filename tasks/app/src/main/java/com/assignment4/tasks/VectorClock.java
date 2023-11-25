@@ -23,17 +23,12 @@ public class VectorClock {
 
     public void updateClock(VectorClock other) {
         // update the clock with the incoming clock value
-        int minLength = Math.min(this.timestamps.length, other.timestamps.length);
-        for (int i = 0; i < minLength; i++) {
-            this.timestamps[i] = Math.max(this.timestamps[i], other.timestamps[i]);
+        for (int i = 0; i < timestamps.length; i++) {
+            timestamps[i] = Math.max(timestamps[i], other.timestamps[i]);
         }
     }
-
-
-
     public String showClock(){
         return Arrays.toString(timestamps);
     }
-
+    public int getSize() {return timestamps.length;}
 }
-
