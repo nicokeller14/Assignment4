@@ -53,7 +53,7 @@ public class VectorClientThread implements Runnable {
                 }
                 vcl.tick(id);
 
-                System.out.println("Server: " + responseMessageArray + " " + vcl.showClock());
+                System.out.println("Server: " + actualResponseMessage + " " + vcl.showClock());
             } catch (IOException e) {
                 e.printStackTrace();
                 break;
