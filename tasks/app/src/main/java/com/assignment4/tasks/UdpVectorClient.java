@@ -52,12 +52,8 @@ public class UdpVectorClient {
 
             // send the message to the server
             sendData = responseMessage.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-            clientSocket.send(sendPacket);
-
-            /*
-             * write your code to send message to the server. clientSocket.send(messageTosend);
-             */
+            DatagramPacket messageToSend = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+            clientSocket.send(messageToSend);
 
 
             // check if the user wants to see the history
