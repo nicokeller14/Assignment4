@@ -3,6 +3,8 @@ package com.assignment4.tasks;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VectorClientThread implements Runnable {
 
@@ -27,22 +29,28 @@ public class VectorClientThread implements Runnable {
                 String response = new String(receivePacket.getData(), 0, receivePacket.getLength());
                 String[] responseMessageArray = response.split(":");
 
-                // Extracting timestamps from the received message
-                String[] timestampStrings = responseMessageArray[1].replaceAll("\\p{Punct}", " ").trim().split("\\s+");
-
-                // Parsing timestamps and updating the vector clock
-                int[] receivedTimestamps = new int[timestampStrings.length];
-                for (int i = 0; i < timestampStrings.length; i++) {
-                    receivedTimestamps[i] = Integer.parseInt(timestampStrings[i]);
+                // Check the response format
+                if (responseMessageArray.length < 2) {
+                    System.err.println("Error: Response received in an unexpected format.");
+                    continue;
                 }
 
-                VectorClock receivedClock = new VectorClock(receivedTimestamps.length);
-                for (int i = 0; i < receivedTimestamps.length; i++) {
-                    receivedClock.setVectorClock(i, receivedTimestamps[i]);
-                }
+                // Separate the actual message from its associated vector clock
+                String actualResponseMessage = responseMessageArray[0];
+                String vectorClockString = responseMessageArray[1].trim();
 
-                // Update the clock and increment local clock (tick) for receiving the message
-                vcl.updateClock(receivedClock); // LINE 45
+                // Use regex to identify vector clock elements
+                Pattern vectorClockPattern = Pattern.compile("(\\d+)=(\\d+)");
+                Matcher vectorClockMatcher = vectorClockPattern.matcher(vectorClockString);
+
+                // Process each entry in the vector clock
+                while (vectorClockMatcher.find()) {
+                    int clockIndex = Integer.parseInt(vectorClockMatcher.group(1));
+                    int clockValue = Integer.parseInt(vectorClockMatcher.group(2));
+                    if (clockIndex >= 0 && clockIndex < vcl.getSize()) {
+                        vcl.setVectorClock(clockIndex, clockValue);
+                    }
+                }
                 vcl.tick(id);
 
                 System.out.println("Server: " + responseMessageArray[0] + " " + vcl.showClock());
