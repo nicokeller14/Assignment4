@@ -51,13 +51,15 @@ public class VectorClientThread implements Runnable {
                         vcl.setVectorClock(clockIndex, clockValue);
                     }
                 }
+
                 vcl.tick(id);
 
                 System.out.println("Server: " + actualResponseMessage + " " + vcl.showClock());
                 break;
-              }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
