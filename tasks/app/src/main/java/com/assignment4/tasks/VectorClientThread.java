@@ -42,7 +42,7 @@ public class VectorClientThread implements Runnable {
                 }
 
                 // Update the clock and increment local clock (tick) for receiving the message
-                vcl.updateClock(receivedClock); // LINE 45
+                vcl.updateClock(receivedClock);
                 vcl.tick(id);
 
                 System.out.println("Server: " + responseMessageArray[0] + " " + vcl.showClock());
