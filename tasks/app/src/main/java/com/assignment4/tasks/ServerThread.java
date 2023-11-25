@@ -109,9 +109,9 @@ public class ServerThread implements Runnable {
                     throw new AssertionError();
                 }
             }
-            } catch(IOException | InterruptedException e){
-                throw new RuntimeException(e);
-            }
+        } catch(IOException | InterruptedException e){
+            throw new RuntimeException(e);
+        }
 
     }
 }

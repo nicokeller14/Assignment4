@@ -17,12 +17,12 @@ public class LamportTimestamp {
 
         return timestamp;
     }
-    public void updateClock(int receivedTimestamp){
-        // update the function to choose max out of the two received timestamps
-        timestamp = Math.max(timestamp, receivedTimestamp);
-        tick();
-
-
+    public void updateClock(int receivedTimestamp) {
+        if (receivedTimestamp > timestamp) {
+            timestamp = receivedTimestamp;
+        }
+        tick(); //  after updating with received timestamp
     }
-
 }
+
+
