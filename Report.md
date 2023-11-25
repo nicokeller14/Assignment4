@@ -9,6 +9,8 @@ Assignment 4
 
 https://github.com/nicokeller14/Assignment4.git
 
+# Task 2
+> We used ChatGPT to help us with certain parts of this task. 
 
 # Task 4
 
